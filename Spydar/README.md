@@ -1,12 +1,12 @@
-# Self Aalancing Automatic Quadcopter
+# Self Balancing Automatic Quadcopter
 
 ## Components of the design
 
 ### Sensors
 - MPU-6050: 6-axis gyroscope and accelerometer
-- Neo-6m: GPs 
+- Neo-6m: GPS 
 
-### Drone Hardaware
+### Drone Hardware
 
 
 
