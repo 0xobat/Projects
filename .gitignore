@@ -49,3 +49,4 @@ deps/
 *.txt
 !README.txt
 !LICENSE.txt
+!CMakeLists.txt
