@@ -46,7 +46,6 @@ deps/
 
 # Log files
 *.log
-*.txt
-!README.txt
-!LICENSE.txt
-!CMakeLists.txt
+debug.txt
+output.txt
+error.txt
