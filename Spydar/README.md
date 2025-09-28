@@ -46,10 +46,24 @@ This quadcopter project implements:
 
 ### Raspberry Pi Pico Connections
 
+#### Communication Interfaces
+
 - **GPS Module:** UART0 TX (GP0/Pin 1), UART0 RX (GP1/Pin 2)
 - **MPU-6050:** I2C0 SCL (GP5/Pin 7), I2C0 SDA (GP4/Pin 6)
-- **ESC Outputs:** PWM - GP6/Pin 9, GP7/Pin 10, GP8/Pin 11, GP9/Pin 12
-- **RC Receiver:** Multiple GPIO pins for channel input
+
+#### Motor Control (PWM)
+
+- **ESC 0:** PWM - GP6/Pin 9
+- **ESC 1:** PWM - GP7/Pin 10
+- **ESC 2:** PWM - GP8/Pin 11
+- **ESC 3:** PWM - GP9/Pin 12
+
+#### Remote Control Inputs (GPIO)
+
+- **Roll:** GPIO - GP21/Pin 27
+- **Pitch:** GPIO - GP20/Pin 26
+- **Throttle:** GPIO - GP19/Pin 25
+- **Yaw:** GPIO - GP18/Pin 24
 
 ## Control Algorithm Features
 
