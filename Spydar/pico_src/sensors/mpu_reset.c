@@ -11,8 +11,8 @@
 // MPU-6050 registers and address
 #define MPU_ADDR 0x68
 #define USER_CONTROL 0x6A
-#define PWR_MNGT 0x6B
-#define SIG_PATH_RESET 0x68
+#define PWR_MGMT_1 0x6B
+#define SIGNAL_PATH_RESET 0x68
 #define WHO_AM_I 0x75
 
 void mpu_i2c_init() {
@@ -49,16 +49,13 @@ int mpu_read_register(uint8_t reg, uint8_t *data) {
 void mpu_reset() {
     printf("Resetting MPU-6050...\n");
 
-    // Reset device
-    mpu_write_register(PWR_MNGT, 128);
+    // Step 1: Device reset (Register 107, bit 7)
+    mpu_write_register(PWR_MGMT_1, 0x80);
     sleep_ms(100);
 
-    // Reset temp, accel and gyro signal paths
-    mpu_write_register(SIG_PATH_RESET, 3);
-    sleep_ms(100);
-
-    // Reset signal path
-    mpu_write_register(USER_CONTROL, 1);
+    // Step 2: Reset all signal paths (Register 104, bits 2:0)
+    // Bit 2: GYRO_RESET, Bit 1: ACCEL_RESET, Bit 0: TEMP_RESET
+    mpu_write_register(SIGNAL_PATH_RESET, 0x07);
     sleep_ms(100);
 
     printf("MPU-6050 reset complete\n");
