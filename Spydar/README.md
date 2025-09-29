@@ -60,10 +60,10 @@ This quadcopter project implements:
 
 #### Remote Control Inputs (GPIO)
 
-- **Roll:** GPIO - GP21/Pin 27
-- **Pitch:** GPIO - GP20/Pin 26
-- **Throttle:** GPIO - GP19/Pin 25
-- **Yaw:** GPIO - GP18/Pin 24
+- **Roll:** GPIO - GP18/Pin 24 [Ch1]
+- **Pitch:** GPIO - GP19/Pin 25 [Ch2]
+- **Throttle:** GPIO - GP20/Pin 26 [Ch3]
+- **Yaw:** GPIO - GP21/Pin 27 [Ch4]
 
 ## Control Algorithm Features
 

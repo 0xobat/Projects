@@ -1,3 +1,19 @@
+# == DO NOT EDIT THE FOLLOWING LINES for the Raspberry Pi Pico VS Code Extension to work ==
+if(WIN32)
+    set(USERHOME $ENV{USERPROFILE})
+else()
+    set(USERHOME $ENV{HOME})
+endif()
+set(sdkVersion 2.2.0)
+set(toolchainVersion 14_2_Rel1)
+set(picotoolVersion 2.2.0)
+set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
+if (EXISTS ${picoVscode})
+    include(${picoVscode})
+endif()
+# ====================================================================================
+set(PICO_BOARD pico CACHE STRING "Board type")
+
 cmake_minimum_required(VERSION 3.13)
 
 set(CMAKE_C_STANDARD 11)
@@ -58,3 +74,64 @@ target_link_libraries(mpu_self_test
 pico_add_extra_outputs(mpu_self_test)
 pico_enable_stdio_usb(mpu_self_test 1)
 pico_enable_stdio_uart(mpu_self_test 0)
+
+# GPS Heartbeat Test executable
+add_executable(gps_heartbeat
+    sensors/gps_heartbeat.c
+)
+
+target_link_libraries(gps_heartbeat
+    pico_stdlib
+    hardware_uart
+    hardware_gpio
+)
+
+pico_add_extra_outputs(gps_heartbeat)
+pico_enable_stdio_usb(gps_heartbeat 1)
+pico_enable_stdio_uart(gps_heartbeat 0)
+
+# GPS Configuration utility
+add_executable(gps_configure
+    sensors/gps_configure.c
+)
+
+target_link_libraries(gps_configure
+    pico_stdlib
+    hardware_uart
+    hardware_gpio
+)
+
+pico_add_extra_outputs(gps_configure)
+pico_enable_stdio_usb(gps_configure 1)
+pico_enable_stdio_uart(gps_configure 0)
+
+# RC Control Test executable
+add_executable(rc_control
+    sensors/rc_control.c
+)
+
+target_link_libraries(rc_control
+    pico_stdlib
+    hardware_gpio
+    hardware_timer
+)
+
+pico_add_extra_outputs(rc_control)
+pico_enable_stdio_usb(rc_control 1)
+pico_enable_stdio_uart(rc_control 0)
+
+# Motor Control Test executable
+add_executable(motor_control
+    sensors/motor_control.c
+)
+
+target_link_libraries(motor_control
+    pico_stdlib
+    hardware_pwm
+    hardware_gpio
+    hardware_clocks
+)
+
+pico_add_extra_outputs(motor_control)
+pico_enable_stdio_usb(motor_control 1)
+pico_enable_stdio_uart(motor_control 0)
