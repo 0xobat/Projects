@@ -4,10 +4,10 @@
 #include "hardware/i2c.h"
 
 // MPU-6050 I2C configuration
-#define MPU_I2C_ID i2c0
-#define MPU_SDA_PIN 4  // GP4 (Pin 6)
-#define MPU_SCL_PIN 5  // GP5 (Pin 7)
-#define MPU_I2C_FREQ 400000
+#define MPU_PORT i2c0
+#define MPU_SDA 4  // GP4 (Pin 6)
+#define MPU_SCL 5  // GP5 (Pin 7)
+#define MPU_FREQ 400000
 
 // MPU-6050 registers
 #define MPU_ADDR 0x68
@@ -22,45 +22,44 @@
 #define SELF_TEST_X 0x0D
 
 // Variables for self-test
-static uint8_t XA_test, XG_test, YA_test, YG_test, ZA_test, ZG_test;
-static int FT_xa, FT_xg, FT_ya, FT_yg, FT_za, FT_zg;
-static int16_t AcX, AcY, AcZ, GyX, GyY, GyZ;
-static int16_t AcX_t, AcY_t, AcZ_t, GyX_t, GyY_t, GyZ_t;
+uint8_t XA_test, XG_test, YA_test, YG_test, ZA_test, ZG_test;
+int FT_xa, FT_xg, FT_ya, FT_yg, FT_za, FT_zg;
+int16_t AcX, AcY, AcZ, GyX, GyY, GyZ;
+int16_t AcX_t, AcY_t, AcZ_t, GyX_t, GyY_t, GyZ_t;
 
-void mpu_i2c_init() {
-    i2c_init(MPU_I2C_ID, MPU_I2C_FREQ);
-    gpio_set_function(MPU_SDA_PIN, GPIO_FUNC_I2C);
-    gpio_set_function(MPU_SCL_PIN, GPIO_FUNC_I2C);
-    gpio_pull_up(MPU_SDA_PIN);
-    gpio_pull_up(MPU_SCL_PIN);
+void mpu_init() {
+    i2c_init(MPU_PORT, MPU_FREQ);
+    gpio_set_function(MPU_SDA, GPIO_FUNC_I2C);
+    gpio_set_function(MPU_SCL, GPIO_FUNC_I2C);
+    gpio_pull_up(MPU_SDA);
+    gpio_pull_up(MPU_SCL);
 
     printf("MPU-6050 I2C initialized\n");
 }
 
-int mpu_write_register(uint8_t reg, uint8_t data) {
+void mpu_write(uint8_t reg, uint8_t data) {
     uint8_t buffer[2] = {reg, data};
-    return i2c_write_blocking(MPU_I2C_ID, MPU_ADDR, buffer, 2, false);
+    i2c_write_blocking(MPU_PORT, MPU_ADDR, buffer, 2, false);
 }
 
-int mpu_read_registers(uint8_t reg, uint8_t *data, size_t len) {
-    int result = i2c_write_blocking(MPU_I2C_ID, MPU_ADDR, &reg, 1, true);
-    if (result != 1) return result;
-    return i2c_read_blocking(MPU_I2C_ID, MPU_ADDR, data, len, false);
+void mpu_read(uint8_t reg, uint8_t *data, size_t len) {
+    i2c_write_blocking(MPU_PORT, MPU_ADDR, &reg, 1, true);
+    i2c_read_blocking(MPU_PORT, MPU_ADDR, data, len, false);
 }
 
 void mpu_setup() {
     // Wake device and configure
-    mpu_write_register(PWR_MNGT, 0);
-    mpu_write_register(CONFIGURE, 1);      // 1kHz output, ~2ms delay
-    mpu_write_register(SAMPLE_RATE, 0);    // 1kHz sample rate
-    mpu_write_register(GYRO_CONFIG, 0);    // 250°/s range, self-test disabled
-    mpu_write_register(ACCL_CONFIG, 16);   // 8g range, self-test disabled
+    mpu_write(PWR_MNGT, 0);
+    mpu_write(CONFIGURE, 1);      // 1kHz output, ~2ms delay
+    mpu_write(SAMPLE_RATE, 0);    // 1kHz sample rate
+    mpu_write(GYRO_CONFIG, 0);    // 250°/s range, self-test disabled
+    mpu_write(ACCL_CONFIG, 16);   // 8g range, self-test disabled
 
     sleep_ms(500);
 
     // Obtain Factory Trims
     uint8_t w_reg[4];
-    mpu_read_registers(SELF_TEST_X, w_reg, 4);
+    mpu_read(SELF_TEST_X, w_reg, 4);
 
     XG_test = w_reg[0] & 0b00011111;
     YG_test = w_reg[1] & 0b00011111;
@@ -68,7 +67,7 @@ void mpu_setup() {
 
     XA_test = (w_reg[0] >> 3) | ((w_reg[3] & 0b00110000) >> 4);
     YA_test = (w_reg[1] >> 3) | ((w_reg[3] & 0b00001100) >> 2);
-    ZA_test = (w_reg[3] >> 3) | (w_reg[3] & 0b00000011);
+    ZA_test = (w_reg[2] >> 3) | (w_reg[3] & 0b00000011);
 
     // Calculate Factory Trim values
     // Gyroscope
@@ -77,9 +76,9 @@ void mpu_setup() {
     FT_zg = (ZG_test == 0) ? 0 : 25 * 131 * pow(1.046, (ZG_test - 1));
 
     // Accelerometer
-    FT_xa = (XA_test == 0) ? 0 : 4096 * 0.92 * pow(1.046, (XA_test - 1));
-    FT_ya = (YA_test == 0) ? 0 : 4096 * 0.92 * pow(1.046, (YA_test - 1));
-    FT_za = (ZA_test == 0) ? 0 : 4096 * 0.92 * pow(1.046, (ZA_test - 1));
+    FT_xa = (XA_test == 0) ? 0 : 4096 * 0.34 * pow(0.92/0.34, (XA_test-1)/30.0);
+    FT_ya = (YA_test == 0) ? 0 : 4096 * 0.34 * pow(0.92/0.34, (YA_test-1)/30.0);
+    FT_za = (ZA_test == 0) ? 0 : 4096 * 0.34 * pow(0.92/0.34, (ZA_test-1)/30.0);
 }
 
 void read_sensor_data(bool self_test_enabled) {
@@ -87,40 +86,43 @@ void read_sensor_data(bool self_test_enabled) {
 
     if (self_test_enabled) {
         // Enable self-test for accelerometer
-        mpu_write_register(GYRO_CONFIG, 0);    // Gyro self-test disabled
-        mpu_write_register(ACCL_CONFIG, 240);  // Accel self-test enabled
+        mpu_write(GYRO_CONFIG, 0);    // Gyro self-test disabled
+        sleep_ms(50);
+        mpu_write(ACCL_CONFIG, 240);  // Accel self-test enabled
         sleep_ms(500);
 
         // Read accelerometer
-        mpu_read_registers(ACCL_DATA, raw_data, 6);
+        mpu_read(ACCL_DATA, raw_data, 6);
         AcX_t = (raw_data[0] << 8) | raw_data[1];
         AcY_t = (raw_data[2] << 8) | raw_data[3];
         AcZ_t = (raw_data[4] << 8) | raw_data[5];
 
         // Enable self-test for gyroscope
-        mpu_write_register(GYRO_CONFIG, 224);  // Gyro self-test enabled
-        mpu_write_register(ACCL_CONFIG, 16);   // Accel self-test disabled
+        mpu_write(GYRO_CONFIG, 224);  // Gyro self-test enabled
+        sleep_ms(50);
+        mpu_write(ACCL_CONFIG, 16);   // Accel self-test disabled (8g range)
         sleep_ms(500);
 
         // Read gyroscope
-        mpu_read_registers(GYRO_DATA, raw_data, 6);
+        mpu_read(GYRO_DATA, raw_data, 6);
         GyX_t = (raw_data[0] << 8) | raw_data[1];
         GyY_t = (raw_data[2] << 8) | raw_data[3];
         GyZ_t = (raw_data[4] << 8) | raw_data[5];
     } else {
         // Disable self-test
-        mpu_write_register(GYRO_CONFIG, 0);    // Gyro self-test disabled
-        mpu_write_register(ACCL_CONFIG, 16);   // Accel self-test disabled
+        mpu_write(GYRO_CONFIG, 0);    // Gyro self-test disabled
+        sleep_ms(50);
+        mpu_write(ACCL_CONFIG, 16);   // Accel self-test disabled (8g range)
         sleep_ms(500);
 
         // Read accelerometer
-        mpu_read_registers(ACCL_DATA, raw_data, 6);
+        mpu_read(ACCL_DATA, raw_data, 6);
         AcX = (raw_data[0] << 8) | raw_data[1];
         AcY = (raw_data[2] << 8) | raw_data[3];
         AcZ = (raw_data[4] << 8) | raw_data[5];
 
         // Read gyroscope
-        mpu_read_registers(GYRO_DATA, raw_data, 6);
+        mpu_read(GYRO_DATA, raw_data, 6);
         GyX = (raw_data[0] << 8) | raw_data[1];
         GyY = (raw_data[2] << 8) | raw_data[3];
         GyZ = (raw_data[4] << 8) | raw_data[5];
@@ -186,7 +188,7 @@ int main() {
     printf("Author: 0xObat\n");
     printf("Description: Self-test validation with factory trim checking\n\n");
 
-    mpu_i2c_init();
+    mpu_init();
     mpu_setup();
 
     while (true) {
