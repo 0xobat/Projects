@@ -5,7 +5,7 @@
 
 // GPS UART configuration
 #define GPS_UART_ID uart0
-#define GPS_BAUD_RATE 4800
+#define GPS_BAUD_RATE 9600
 #define GPS_TX_PIN 0  // GP0 (Pin 1)
 #define GPS_RX_PIN 1  // GP1 (Pin 2)
 
@@ -46,13 +46,17 @@ void gps_test_init() {
 }
 
 bool is_valid_nmea_sentence(const char* sentence) {
-    // Check for NMEA sentence format: $GPXXX or $GNXXX
-    if (strlen(sentence) < 6) return false;
+    // Check for NMEA sentence format: $GPXXX, $GNXXX, or $PUBX
+    if (strlen(sentence) < 4) return false;
     if (sentence[0] != '$') return false;
-    if (strncmp(sentence + 1, "GP", 2) != 0 && strncmp(sentence + 1, "GN", 2) != 0) return false;
 
-    // Look for comma-separated fields
-    return strchr(sentence, ',') != NULL;
+    // Accept GP, GN, or PUBX sentences
+    if (strstr(sentence, "GP") || strstr(sentence, "GN") || strstr(sentence, "PUBX")) {
+        // Look for comma-separated fields
+        return strchr(sentence, ',') != NULL;
+    }
+
+    return false;
 }
 
 void process_gps_data() {
@@ -67,19 +71,27 @@ void process_gps_data() {
         if (buf_pos < sizeof(buffer) - 1) {
             buffer[buf_pos++] = c;
 
-            if (c == '\n') {
-                buffer[buf_pos] = '\0';
-                test_status.total_sentences++;
+            if (c == '\n' || c == '\r') {
+                buffer[buf_pos-1] = '\0';  // Replace newline with null terminator
 
-                // Check if it's a valid NMEA sentence
-                if (is_valid_nmea_sentence(buffer)) {
-                    test_status.nmea_detected = true;
-                    test_status.valid_sentence_count++;
+                // Only process non-empty lines
+                if (strlen(buffer) > 0) {
+                    test_status.total_sentences++;
 
-                    // Check for specific sentence types that indicate GPS is working
-                    if (strstr(buffer, "$GPGGA") || strstr(buffer, "$GNGGA") ||
-                        strstr(buffer, "$GPRMC") || strstr(buffer, "$GNRMC")) {
-                        test_status.valid_sentences = true;
+                    // Debug output - show raw received data
+                    printf("RX: %s\n", buffer);
+
+                    // Check if it's a valid NMEA sentence
+                    if (is_valid_nmea_sentence(buffer)) {
+                        test_status.nmea_detected = true;
+                        test_status.valid_sentence_count++;
+
+                        // Check for specific sentence types that indicate GPS is working
+                        if (strstr(buffer, "$GPGGA") || strstr(buffer, "$GNGGA") ||
+                            strstr(buffer, "$GPRMC") || strstr(buffer, "$GNRMC") ||
+                            strstr(buffer, "$PUBX")) {
+                            test_status.valid_sentences = true;
+                        }
                     }
                 }
 
@@ -176,7 +188,7 @@ int main() {
             break;
         }
 
-        sleep_ms(100);
+        sleep_ms(5000);
     }
 
     return 0;

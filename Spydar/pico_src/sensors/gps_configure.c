@@ -220,51 +220,57 @@ int main() {
     printf("GPS Configuration Utility - Neo-6M\n");
     printf("===================================\n\n");
 
-    // Test different baud rates to find current GPS setting
-    bool gps_found = false;
-    uint32_t working_baud = 0;
+    // Continuously test baud rates in a loop
+    while (true) {
+        bool gps_found = false;
+        uint32_t working_baud = 0;
 
-    for (int i = 0; i < num_baud_rates && !gps_found; i++) {
-        printf("\n--- Testing baud rate: %d ---\n", test_baud_rates[i]);
-        gps_init_uart(test_baud_rates[i]);
+        // Test different baud rates to find current GPS setting
+        for (int i = 0; i < num_baud_rates && !gps_found; i++) {
+            printf("\n--- Testing baud rate: %d ---\n", test_baud_rates[i]);
+            gps_init_uart(test_baud_rates[i]);
 
-        // First, just listen for any data without sending commands
-        printf("Listening for spontaneous data...\n");
-        listen_raw_data(2000);
+            // First, just listen for any data without sending commands
+            printf("Listening for spontaneous data...\n");
+            listen_raw_data(2000);
 
-        // Send a simple query command
-        printf("Sending version query...\n");
-        send_nmea_command("$PUBX,04*");
+            // Send a simple query command
+            printf("Sending version query...\n");
+            send_nmea_command("$PUBX,04*");
 
-        if (test_gps_response(3000)) {
-            gps_found = true;
-            working_baud = test_baud_rates[i];
-            printf("GPS found at %d baud!\n", working_baud);
+            if (test_gps_response(3000)) {
+                gps_found = true;
+                working_baud = test_baud_rates[i];
+                printf("GPS found at %d baud!\n", working_baud);
+            }
         }
-    }
 
-    if (!gps_found) {
-        printf("\n❌ GPS not responding at any tested baud rate\n");
-        printf("Check connections and power supply\n");
-        return 1;
-    }
+        if (!gps_found) {
+            printf("\n❌ GPS not responding at any tested baud rate\n");
+            printf("Check connections and power supply\n");
+        } else {
+            printf("\n✅ GPS responding at %d baud\n", working_baud);
 
-    printf("\n✅ GPS responding at %d baud\n", working_baud);
+            // Now configure for NMEA output
+            configure_gps_nmea();
 
-    // Now configure for NMEA output
-    configure_gps_nmea();
+            // Switch to 9600 baud and test NMEA output
+            printf("\n--- Testing NMEA output at 9600 baud ---\n");
+            gps_init_uart(9600);
+            sleep_ms(1000);
 
-    // Switch to 9600 baud and test NMEA output
-    printf("\n--- Testing NMEA output at 9600 baud ---\n");
-    gps_init_uart(9600);
-    sleep_ms(1000);
+            if (test_gps_response(10000)) {
+                printf("\n✅ GPS successfully configured for NMEA output!\n");
+                printf("You can now use gps_reader or gps_heartbeat\n");
+            } else {
+                printf("\n⚠️  Configuration may need more time\n");
+                printf("Try running gps_heartbeat again in 1-2 minutes\n");
+            }
+        }
 
-    if (test_gps_response(10000)) {
-        printf("\n✅ GPS successfully configured for NMEA output!\n");
-        printf("You can now use gps_reader or gps_heartbeat\n");
-    } else {
-        printf("\n⚠️  Configuration may need more time\n");
-        printf("Try running gps_heartbeat again in 1-2 minutes\n");
+        // Wait 5 seconds before testing again
+        printf("\n\n=== Waiting 5 seconds before next test cycle ===\n\n");
+        sleep_ms(5000);
     }
 
     return 0;
