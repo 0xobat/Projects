@@ -1,110 +1,126 @@
-# Project Spydar - Self Balancing Quadcopter
+# Project Spydar - FPV Quadcopter
 
-A comprehensive quadcopter design featuring autonomous flight capabilities with remote control, hover mode, and GPS navigation.
+A 5-inch FPV quadcopter build featuring digital FPV system, GPS navigation, and autonomous flight capabilities.
 
 ## Project Overview
 
 This quadcopter project implements:
 
-- **Self-balancing flight** using sensor fusion and PID control
-- **Remote control operation** via RC transmitter
-- **Hover mode** for stable positioning
-- **GPS waypoint navigation** capabilities
+- **FPV freestyle flight** with DJI O4 digital video transmission
+- **Remote control operation** via Remote Controller
+- **Stabilized flight modes** using Betaflight flight controller
+- **GPS navigation** capabilities for position hold and waypoint missions
 
 ## System Architecture
 
 ### Control System
 
-- **Flight Control Unit:** Raspberry Pi Pico microcontroller
+- **Flight Controller:** SpeedyBee F7 V3 BL32 Flight Controller (30x30mm stack)
+- **ESC:** Integrated 50A BLHeli_32 4-in-1 ESC
+- **Flight Firmware:** Betaflight
 - **Control Algorithms:**
   - PID controllers for attitude stabilization (roll, pitch, yaw)
-  - Fuzzy logic for enhanced control
-  - Sensor fusion combining gyroscope and accelerometer data
-- **Flight Modes:** Manual RC control and GPS-assisted autonomous flight
+  - GPS rescue and position hold modes
+  - Multiple flight modes: Acro, Angle, Horizon
+- **Remote Control:** DJI FPV Remote Controller 3 with S.Bus protocol
 
 ### Hardware Components
 
+#### Frame
+
+- **SpeedyBee Master 5 V2:** 5-inch freestyle frame with quick-release arms
+- **Weight:** ~140g frame kit
+- **Mounting:** 30.5x30.5mm and 20x20mm FC patterns
+
+#### FPV System
+
+- **Goggles:** DJI Goggles N3 with O4 video transmission
+- **Air Unit:** DJI O4 Air Unit for digital HD video
+- **Remote:** DJI FPV Remote Controller 3
+
 #### Sensors
 
-- **MPU-6050:** 6-axis gyroscope and accelerometer for attitude sensing
-- **NEO-6M GPS:** Global positioning for navigation and waypoint following
-- **RC Receiver:** 4+ channel receiver for manual control input
+- **IMU:** Built-in gyroscope and accelerometer on F7 flight controller
+- **GPS Module:** Ublox NEO-6M for navigation and position hold
+- **Barometer:** Built-in on F7 flight controller
 
 #### Propulsion System
 
-- **4x Brushless Motors:** ESC (electronic speed controllers)
-- **4x Propellers:** Counter-rotating configuration
-- **Power Distribution:** Parallel motor connection with voltage regulation
+- **Motors:** 4x Axisflying 2207 1960KV brushless motors
+- **Propellers:** HQProp Ethix S5 5x4x3 tri-blade props (16 props: 8 CW, 8 CCW)
+- **Power Distribution:** Integrated on ESC stack
 
-#### Electronics
+#### Power System
 
-- **Microcontroller:** Raspberry Pi Pico (pins configured for SPI, I2C, UART communication)
-- **Power System:** Rechargeable LiPo battery with voltage regulation
-- **Communication:** UART protocol for GPS, I2C for MPU-6050, PWM for ESCs
+- **Battery:** SUNPADOW 6S LiPo 22.2V 1400mAh
+- **Charger:** LiPo balance charger
+- **Connector:** XT60
 
-## Pin Configuration
+## Configuration
 
-### Raspberry Pi Pico Connections
+### Flight Controller Setup
 
-#### Communication Interfaces
+- **Firmware:** Betaflight (latest stable)
+- **Receiver Protocol:** S.Bus from DJI FPV Remote Controller 3
+- **GPS:** UART connection to NEO-6M module
+- **ESC Protocol:** DShot600 or DShot300
+- **Blackbox Logging:** Enabled via micro SD card
 
-- **GPS Module:** UART0 TX (GP0/Pin 1), UART0 RX (GP1/Pin 2)
-- **MPU-6050:** I2C0 SCL (GP5/Pin 7), I2C0 SDA (GP4/Pin 6)
+### DJI System Binding
 
-#### Motor Control (PWM)
+- Bind DJI O4 Air Unit to Goggles N3
+- Bind DJI FPV Remote Controller 3 to Goggles N3
+- Configure audience mode if needed
 
-- **ESC 0:** PWM - GP6/Pin 9
-- **ESC 1:** PWM - GP7/Pin 10
-- **ESC 2:** PWM - GP8/Pin 11
-- **ESC 3:** PWM - GP9/Pin 12
+## Flight Features
 
-#### Remote Control Inputs (GPIO)
+### Flight Modes
 
-- **Roll:** GPIO - GP18/Pin 24 [Ch1]
-- **Pitch:** GPIO - GP19/Pin 25 [Ch2]
-- **Throttle:** GPIO - GP20/Pin 26 [Ch3]
-- **Yaw:** GPIO - GP21/Pin 27 [Ch4]
+- **Acro Mode:** Full manual control for freestyle flying
+- **Angle Mode:** Self-leveling mode for beginners
+- **Horizon Mode:** Mix of acro and angle modes
+- **GPS Rescue:** Automated return to home on signal loss
 
-## Control Algorithm Features
+### Betaflight Features
 
-### PID Control System
+- **PID Tuning:** Customizable PID gains for different flight characteristics
+- **OSD (On-Screen Display):** Real-time telemetry via DJI goggles
+- **Blackbox Logging:** Flight data recording for analysis and tuning
+- **GPS Navigation:** Position hold and waypoint missions
 
-- **Attitude Control:** Separate PID loops for roll, pitch, and yaw axes
-- **Position Control:** GPS-based positioning with configurable waypoints
-- **Motor Mixing:** Converts control commands to individual motor speeds
+## Software Setup
 
-### Sensor Processing
+The quadcopter uses **Betaflight** firmware configured via Betaflight Configurator:
 
-- **High-frequency sensor reading** for real-time response
-- **Digital filtering** for noise reduction
-- **Sensor calibration** routines for optimal performance
+- **Initial Setup:** Flash Betaflight firmware to SpeedyBee F7 V3
+- **Configuration:** Set up motor outputs, receiver, and GPS
+- **Calibration:** Accelerometer calibration and ESC calibration
+- **PID Tuning:** Adjust PIDs for stable flight
+- **OSD Setup:** Configure on-screen display elements
 
-## Software Architecture
+## Assembly Notes
 
-The code is developed using the **Raspberry Pi Pico C/C++ SDK** and organized into modular functions:
+- Frame comes with comprehensive hardware kit including screws, standoffs, and TPU parts
+- GPS mount (181 base) included for NEO-6M module
+- Battery straps (2x 250mm) included
+- Anti-vibration mounts for camera and flight controller stack
 
-- **Setup:** Initialize sensors, calibrate systems, configure communication
-- **Main Loop:** Read sensors, calculate control outputs, update motors
-- **ISR:** Handle RC input and real-time control tasks
+## Build Specifications
 
-## Test Code Included
-
-- **MPU-6050 self-test:** Sensor validation and calibration
-- **ESC PWM calibration:** Motor controller setup and testing
-- **GPS communication:** UART protocol testing and data parsing
-
-## Flight Characteristics
-
-- **Programmable flight parameters** via RC control ranges
-- **Configurable PID gains** for different flight characteristics
-- **Safety features** including failsafe modes
-- **Real-time telemetry** for flight monitoring
+- **Frame Size:** 5-inch (220mm diagonal)
+- **Weight:** ~450-500g (estimated dry weight)
+- **Battery:** 6S 1400mAh (~150g)
+- **Flight Time:** 4-6 minutes (estimated)
+- **Top Speed:** 100+ km/h (depends on tuning)
+- **Video System:** DJI O4 digital HD transmission
 
 ## Documentation
 
-Complete hardware schematics and wiring diagrams are included showing:
+See [Parts.md](Parts.md) for complete parts list with purchase links.
 
-- Power distribution system
-- Sensor connections and pin assignments
-- ESC wiring configuration
-- RC receiver integration
+Additional resources:
+
+- Betaflight configuration backup
+- GPS module wiring and setup
+- DJI system binding procedures
+- PID tuning guides
