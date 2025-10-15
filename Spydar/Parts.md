@@ -38,3 +38,18 @@
 - **Jumper wires**
 - **Heat shrink tubes**
 - **XT60 Smoke Stopper**
+
+## Price
+
+| Component                   | Price (CAD)    |
+| --------------------------- | -------------- |
+| DJI O4 Air Unit Pro         | $405.79        |
+| DJI Goggles N3              | $360.47        |
+| DJI FPV Remote Controller 3 | $264.26        |
+| Motors + Propellers         | $134.14        |
+| FC + ESC Stack              | $132.41        |
+| Frame                       | $119.77        |
+| Battery (6S 1400mAh)        | $84.74         |
+| XT60 Smoke Stopper          | $15.81         |
+| Soldering Flux              | $11.11         |
+| **Estimated Total**         | **~$1,528.50** |
