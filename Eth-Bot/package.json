@@ -1,13 +1,18 @@
 {
   "name": "eth-bot",
   "private": true,
-  "devDependencies": {
-    "@types/bun": "latest"
+  "type": "module",
+  "scripts": {
+    "start": "tsx open_router.ts",
+    "dev": "tsx watch open_router.ts"
   },
-  "peerDependencies": {
+  "devDependencies": {
+    "@types/node": "^22",
+    "tsx": "^4",
     "typescript": "^5"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "openai": "^6.3.0"
   }
 }
