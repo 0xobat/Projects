@@ -1,0 +1,20 @@
+# Risk Management Parameters
+# These protect against catastrophic losses
+
+position_limits:
+  # Maximum position size as percentage of capital
+  # Even with high confidence, never risk more than this
+  max_position_size_pct: 0.25
+
+loss_limits:
+  # Stop loss: exit position if it drops this much
+  # Example: 0.05 = exit if position loses 5%
+  stop_loss_pct: 0.05
+
+  # Maximum daily loss as percentage of starting capital
+  # Trading stops for the day if this is hit
+  max_daily_loss_pct: 0.10
+
+  # Maximum drawdown from peak equity
+  # Circuit breaker: stop all trading if equity drops this much from peak
+  max_drawdown_pct: 0.20
