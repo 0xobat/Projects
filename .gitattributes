@@ -1,2 +1,0 @@
-val/public/photos/*.mov filter=lfs diff=lfs merge=lfs -text
-val/public/photos/*.mp4 filter=lfs diff=lfs merge=lfs -text

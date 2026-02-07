@@ -26,7 +26,7 @@ export default function CelebrationModal() {
       {/* Video layer — always mounted, fades in when phase is "video" */}
       <div className="absolute inset-0 z-30">
         <VideoPlayer
-          src="/photos/our-memories.mp4"
+          src="https://lnrbp4pw93eekodh.public.blob.vercel-storage.com/our-memories.mp4"
           visible={phase === "video"}
         />
       </div>

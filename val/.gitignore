@@ -1,1 +1,3 @@
-# Videos tracked via Git LFS (see root .gitattributes)
+# Large media — served from Vercel Blob
+public/photos/*.mov
+public/photos/*.mp4
