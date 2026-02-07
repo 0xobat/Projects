@@ -1,0 +1,9 @@
+[
+  {
+    "id": "F001",
+    "category": "infra",
+    "description": "Umbrella harness delegates to subprojects",
+    "steps": ["init.sh delegates to subproject init scripts", "verify.sh delegates to subproject verify scripts"],
+    "passes": true
+  }
+]

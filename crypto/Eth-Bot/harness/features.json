@@ -1,0 +1,51 @@
+[
+  {
+    "id": "F001",
+    "category": "functional",
+    "description": "OpenRouter AI integration for trading signals",
+    "steps": ["Configure OpenAI client with OpenRouter", "Send prompts", "Parse responses"],
+    "passes": true
+  },
+  {
+    "id": "F002",
+    "category": "infra",
+    "description": "Environment variable management with dotenv",
+    "steps": ["Load .env file", "Validate required vars exist"],
+    "passes": true
+  },
+  {
+    "id": "F003",
+    "category": "functional",
+    "description": "Short and Long ETH using Aave collateral",
+    "steps": ["Connect wallet", "Deposit collateral", "Execute leverage loop"],
+    "passes": false
+  },
+  {
+    "id": "F004",
+    "category": "functional",
+    "description": "Uniswap swap execution",
+    "steps": ["Quote swap price", "Build swap transaction", "Execute and confirm"],
+    "passes": false
+  },
+  {
+    "id": "F005",
+    "category": "functional",
+    "description": "Balancer flash loan integration",
+    "steps": ["Request flash loan", "Execute arbitrage logic", "Repay loan"],
+    "passes": false
+  },
+  {
+    "id": "F006",
+    "category": "test",
+    "description": "Unit test suite with vitest",
+    "steps": ["Install vitest", "Write tests for core logic", "Add to verify.sh"],
+    "passes": false
+  },
+  {
+    "id": "F007",
+    "category": "infra",
+    "description": "TypeScript strict mode and linting",
+    "steps": ["Enable strict in tsconfig", "Add eslint config", "Fix type errors"],
+    "passes": false
+  }
+]

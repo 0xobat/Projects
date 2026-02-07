@@ -31,3 +31,12 @@ test("hello world", () => {
   expect(1).toBe(1);
 });
 ```
+
+## Agent Harness
+
+This project uses the harness convention. See `harness/` directory:
+
+- `harness/init.sh` — Install deps, verify environment
+- `harness/verify.sh` — Type-check and validate
+- `harness/features.json` — Feature inventory with pass/fail status
+- `harness/progress.txt` — Read this first to see what previous sessions did

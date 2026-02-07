@@ -1,0 +1,65 @@
+[
+  {
+    "id": "F001",
+    "category": "functional",
+    "description": "GPS data reading and parsing",
+    "steps": ["UART configuration", "NMEA sentence parsing", "Position extraction"],
+    "passes": true
+  },
+  {
+    "id": "F002",
+    "category": "functional",
+    "description": "GPS heartbeat and configuration",
+    "steps": ["Send UBX commands", "Configure update rate", "Heartbeat monitoring"],
+    "passes": true
+  },
+  {
+    "id": "F003",
+    "category": "functional",
+    "description": "MPU IMU sensor integration",
+    "steps": ["I2C initialization", "Self-test routine", "Sensor reset"],
+    "passes": true
+  },
+  {
+    "id": "F004",
+    "category": "functional",
+    "description": "Motor control via ESC",
+    "steps": ["PWM signal generation", "Throttle mapping", "Motor arming sequence"],
+    "passes": true
+  },
+  {
+    "id": "F005",
+    "category": "functional",
+    "description": "RC control input processing",
+    "steps": ["S.Bus protocol decoding", "Channel mapping", "Failsafe detection"],
+    "passes": true
+  },
+  {
+    "id": "F006",
+    "category": "functional",
+    "description": "Sensor fusion for attitude estimation",
+    "steps": ["Combine gyro and accel data", "Complementary or Kalman filter", "Output roll/pitch/yaw"],
+    "passes": false
+  },
+  {
+    "id": "F007",
+    "category": "functional",
+    "description": "PID flight controller",
+    "steps": ["PID loop for roll/pitch/yaw", "Rate and angle modes", "Motor mixing"],
+    "passes": false
+  },
+  {
+    "id": "F008",
+    "category": "functional",
+    "description": "GPS waypoint navigation",
+    "steps": ["Waypoint storage", "Distance/bearing calculation", "Navigation loop"],
+    "passes": false
+  },
+  {
+    "id": "F009",
+    "category": "infra",
+    "description": "CMake build system for all modules",
+    "steps": ["CMakeLists for each module", "Pico SDK integration", "Build all targets"],
+    "passes": false
+  }
+]
