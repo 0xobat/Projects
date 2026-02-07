@@ -55,3 +55,22 @@ Completed:
 Blocked: Nothing
 Next: Deploy to Vercel, visual QA on mobile
 Preserved: All existing functionality (dodging No, growing Yes, HeartBurst → Video celebration, carousel, word-by-word reveal)
+
+--- Session 2026-02-07 (Envelope Gate + OG Image) ---
+Worked on: Envelope intro gate and OpenGraph image for iMessage previews
+Completed:
+  - Created EnvelopeGate.tsx: "use client" component with Framer Motion, "For Shindy" in Great Vibes cursive, rose envelope with wax seal, triangular flap rotateX animation, responsive sizing (300→400px on sm+), "Tap to open" pulsing hint, 800ms delay before onOpen callback
+  - Created PageContent.tsx: "use client" wrapper managing isOpened state, AnimatePresence wraps envelope (exit: 1s opacity fade), main content fades in (opacity 0→1 with 0.3s delay)
+  - Simplified page.tsx: server component keeps background effects (noise SVG, ambient orbs), delegates all client content to <PageContent />
+  - Updated layout.tsx: added openGraph + twitter card metadata pointing to /og-image.png
+  - Created OG render HTML (scratchpad/og-render.html): 1200x630px navy gradient with rose envelope, wax seal, floating hearts, "For Shindy" in Great Vibes
+  - Verified render looks correct in Chrome at exact 1200x630 viewport
+Blocked: OG image capture — need to screenshot the render HTML and save as val/public/og-image.png
+Next:
+  1. Capture og-render.html as PNG → val/public/og-image.png
+  2. Run pnpm build to verify static export
+  3. Test on mobile viewport
+  4. Deploy and test iMessage OG preview
+Files created: val/src/components/EnvelopeGate.tsx, val/src/components/PageContent.tsx
+Files modified: val/src/app/page.tsx, val/src/app/layout.tsx
+OG render source: saved at scratchpad path (temp), serve with `python3 -m http.server 8765` from scratchpad dir

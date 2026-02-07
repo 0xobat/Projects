@@ -1,9 +1,4 @@
-import FloatingHearts from "@/components/FloatingHearts";
-import HeroSection from "@/components/HeroSection";
-import ScrollIndicator from "@/components/ScrollIndicator";
-import PhotoCarousel from "@/components/PhotoCarousel";
-import LoveLetter from "@/components/LoveLetter";
-import Footer from "@/components/Footer";
+import PageContent from "@/components/PageContent";
 
 export default function Home() {
   return (
@@ -33,21 +28,7 @@ export default function Home() {
         style={{ animation: "pulse-slow 8s 4s ease-in-out infinite" }}
       />
 
-      <FloatingHearts />
-
-      {/* Content layer — above fixed background effects */}
-      <div className="relative z-10">
-        <HeroSection />
-        <ScrollIndicator />
-
-        {/* Glass divider for photo carousel */}
-        <div className="border-y border-white/5 bg-black/20 backdrop-blur-sm">
-          <PhotoCarousel />
-        </div>
-
-        <LoveLetter />
-        <Footer />
-      </div>
+      <PageContent />
     </main>
   );
 }
