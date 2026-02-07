@@ -1,0 +1,57 @@
+--- Session 2026-02-07 ---
+Worked on: Harness initialization
+Completed: Created harness convention files (init.sh, verify.sh, features.json)
+Blocked: Project is a stub — needs scaffolding before any feature work
+Next: F001 - Project scaffolding and initial setup
+Commit: (pending)
+
+--- Session 2026-02-07 (PRD) ---
+Worked on: Product Requirements Document for Valentine webpage
+Completed:
+  - Inspected reference site (be-my-val-virid.vercel.app) via Chrome browser automation
+  - Documented 3-section structure: Hero Ask, Photo Carousel, Love Letter
+  - Identified core interactions: dodging No button, growing Yes button, celebration modal, word-by-word reveal
+  - Analyzed design language: burgundy palette, serif headings, floating heart particles, Tailwind CSS
+  - Created comprehensive PRD at val/prd.json
+  - Added feature inventory F003-F008 to features.json
+Blocked: Nothing — PRD is complete, ready for implementation
+Next: F001 - Project scaffolding (single HTML + Tailwind CDN, or Vite if preferred)
+Open items: Personal photos, personal copy (subtitle, love letter, celebration text), color preference
+
+--- Session 2026-02-07 (Implementation) ---
+Worked on: Full implementation of all features F001-F008
+Completed:
+  - F001: Scaffolded Next.js 15 (App Router) with TypeScript, Tailwind v4, pnpm
+  - F002: Configured static export, Playfair Display + Inter fonts, burgundy color palette, harness scripts
+  - F003: Hero Section with full-viewport layout, serif heading, coral accent, gradient background
+  - F004: Dodging No button (mouseenter + touchstart), boundary clamping, escalating messages, Yes grows
+  - F005: Celebration modal with confetti, pulsing heart, sparkles, backdrop blur, entrance animation
+  - F006: Floating hearts with seeded random positions, CSS float-up animation, varying sizes/opacity
+  - F007: Photo carousel with auto-advance, touch swipe, dot indicators, pause/resume
+  - F008: Love letter with IntersectionObserver word-by-word reveal, blur-to-clear animation
+  - All lint + build checks pass
+Blocked: Nothing
+Next: Personalization — replace placeholder copy, add real photos to public/photos/, deploy to Vercel
+Open items: Same as previous session (personal photos, subtitle, love letter text, celebration message)
+
+--- Session 2026-02-07 (Design Integration) ---
+Worked on: Integrating prototype design into production site
+Completed:
+  - Replaced burgundy palette with rose palette + navy/purple gradient backgrounds
+  - Added Great Vibes cursive font for "Valentine?" heading
+  - Added noise texture overlay + two ambient pulsing light orbs (rose + purple)
+  - Converted FloatingHearts from CSS/SVG to Framer Motion with emoji hearts and sway
+  - Redesigned HeroSection: badge pill, gradient clip text, cursive "Valentine?", text glow, glass No button, AnimatePresence entrance
+  - Restyled PhotoCarousel: glass morphism container, rose dots, gradient heading, subtitle, whileInView
+  - Restyled LoveLetter: rose colors, gradient heading, whileInView animation
+  - Created new ScrollIndicator component (bouncing arrow with Framer Motion)
+  - Created new Footer component (server component, "Made with heart")
+  - Added custom scrollbar styles and rose selection highlight
+  - Added pulse-slow and text-glow keyframes
+  - Fixed pre-existing VideoPlayer lint error (setReady in effect)
+  - Added val-design-prototype/ to eslint ignore
+  - Installed framer-motion and lucide-react
+  - All lint + build checks pass (harness/verify.sh)
+Blocked: Nothing
+Next: Deploy to Vercel, visual QA on mobile
+Preserved: All existing functionality (dodging No, growing Yes, HeartBurst → Video celebration, carousel, word-by-word reveal)

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "F001",
+    "category": "infra",
+    "description": "Project scaffolding and initial setup",
+    "steps": ["Scaffold Next.js app with create-next-app", "Configure static export in next.config.ts", "Set up fonts via next/font (Playfair Display + Inter)", "Define color palette in Tailwind config"],
+    "passes": true
+  },
+  {
+    "id": "F002",
+    "category": "infra",
+    "description": "Development environment configuration",
+    "steps": ["TypeScript config (tsconfig.json)", "ESLint config", "Tailwind config with custom theme (burgundy palette, fonts)", "Update harness scripts for pnpm + next build"],
+    "passes": true
+  },
+  {
+    "id": "F003",
+    "category": "feature",
+    "description": "Hero Section — The Ask (full-viewport, heading, subtitle, Yes/No buttons)",
+    "steps": ["Layout and typography", "Button styling", "Background gradient", "Responsive on mobile"],
+    "passes": true
+  },
+  {
+    "id": "F004",
+    "category": "feature",
+    "description": "Dodging No Button (repositions on hover/touch, Yes button grows)",
+    "steps": ["Desktop hover handler", "Mobile touch handler", "Boundary clamping", "Yes button growth effect"],
+    "passes": true
+  },
+  {
+    "id": "F005",
+    "category": "feature",
+    "description": "Celebration State (modal with heart animation, blur, personal message)",
+    "steps": ["Modal markup and styling", "Heart pulse animation", "Backdrop blur", "Confetti or sparkle effect"],
+    "passes": true
+  },
+  {
+    "id": "F006",
+    "category": "feature",
+    "description": "Floating Hearts Background (ambient CSS heart particles)",
+    "steps": ["SVG heart shapes", "Float animation keyframes", "Varying sizes and opacities", "Fixed position layer"],
+    "passes": true
+  },
+  {
+    "id": "F007",
+    "category": "feature",
+    "description": "Personal Photo Carousel (Our Memories section)",
+    "steps": ["Auto-advance timer", "Touch swipe support", "Image placeholders", "Dot indicators"],
+    "passes": true
+  },
+  {
+    "id": "F008",
+    "category": "feature",
+    "description": "Love Letter Section (word-by-word scroll-triggered reveal)",
+    "steps": ["Word wrapping in spans", "Intersection Observer trigger", "Staggered animation", "Decorative elements"],
+    "passes": true
+  }
+]

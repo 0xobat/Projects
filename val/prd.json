@@ -1,0 +1,219 @@
+{
+  "document": "Product Requirements Document",
+  "project": "val",
+  "version": "1.0",
+  "date": "2026-02-07",
+
+  "reference_site_analysis": {
+    "url": "https://be-my-val-virid.vercel.app/",
+    "summary": "A single-page, vertically-scrolling Valentine proposal site with three full-viewport sections, a deep burgundy color palette, floating heart particles, and two key playful mechanics.",
+    "page_flow": [
+      "Section 1 — The Ask: Full-screen hero with large serif heading, subtitle, Yes/No buttons",
+      "Section 2 — Our Memories: Photo carousel with romantic images, auto-play, dot navigation",
+      "Section 3 — My Love For You: Word-by-word animated love letter that builds on scroll"
+    ],
+    "core_interactions": {
+      "dodging_no_button": "On hover, the No button jumps to a random screen position. It persists across all sections at z-index 9999, always visible but effectively uncatchable.",
+      "growing_yes_button": "When No is hovered, the Yes button grows larger, centers itself, and gains sparkle effects — making it the obvious and only real choice.",
+      "celebration_modal": "Clicking Yes triggers a centered modal with animated pulsing heart, 'Yayyyy' headline, 'I knew it!' subtext, sparkle decorations, and blurred background.",
+      "photo_carousel": "Auto-sliding image carousel with 5 images, dot indicators, and pause/play toggle.",
+      "word_reveal": "Love letter text animates word-by-word via individually wrapped spans, likely triggered by scroll/intersection observer."
+    },
+    "emotional_tone": "Warm, playful, romantic. The dodging button creates laughter. The love letter creates intimacy. The celebration creates shared joy.",
+    "design_language": {
+      "colors": "Deep burgundy background, coral/salmon red accents, soft pink, cream highlights",
+      "typography": "Large serif for headings (white + coral accent words), sans-serif for body, italic for emotional subtexts",
+      "atmosphere": "Candlelit, intimate. Floating semi-transparent heart particles across all sections."
+    }
+  },
+
+  "essential_vs_optional": {
+    "essential": [
+      "Full-screen 'Will you be my Valentine?' hero section",
+      "Yes/No buttons with the dodging No mechanic",
+      "Celebration state when Yes is clicked",
+      "Romantic color palette and typography",
+      "Mobile-responsive layout",
+      "Floating heart particle background"
+    ],
+    "optional_but_recommended": [
+      "Personal photo carousel (Our Memories section)",
+      "Love letter with word-by-word animation"
+    ],
+    "skip": [
+      "Share/Send to Loved One button (adds complexity, not needed for private use)",
+      "Background music toggle",
+      "Dot navigation for carousel (swipe is sufficient on mobile)"
+    ]
+  },
+
+  "personalization_opportunities": {
+    "copy": [
+      "Replace generic subtitle with something personal — an inside joke or shared reference",
+      "Write the love letter in your own voice, not the generic template",
+      "Personalize the celebration modal text (e.g., reference tonight's dinner)"
+    ],
+    "visuals": [
+      "Replace stock photos with real photos of the two of you",
+      "Add a personal detail to the color scheme if she has a favorite color"
+    ],
+    "interactions": [
+      "The No button could show escalating funny messages each time it dodges (e.g., 'Nice try', 'Not happening', 'I said NO to No')",
+      "Celebration modal could include a specific call-to-action for tonight (e.g., 'See you at dinner')",
+      "The Yes button could show a heart icon that pulses on hover"
+    ]
+  },
+
+  "prd": {
+    "overview": "A single-page, mobile-first webpage that asks the user's girlfriend to be his Valentine. The page uses playful interaction design (a dodging No button) to create laughter, a personal love letter to create intimacy, and a celebration state to create shared joy. It will be shown tonight at dinner.",
+
+    "target_user": "One specific person — the builder's girlfriend, viewing on her phone at dinner.",
+
+    "user_goal": "She taps the link, smiles or laughs at the playful interaction, feels loved by the personal content, and taps Yes.",
+
+    "success_criteria": [
+      "Page loads in under 2 seconds on mobile",
+      "The No button is clearly uncatchable on both desktop and mobile (touch and hover)",
+      "Clicking Yes produces a satisfying, visible celebration",
+      "All personal copy feels genuine, not like a template",
+      "Page is fully usable on an iPhone screen without horizontal scrolling",
+      "Can be deployed to a public URL (Vercel, Netlify, or similar) within the build session"
+    ],
+
+    "core_features": [
+      {
+        "id": "F003",
+        "name": "Hero Section — The Ask",
+        "description": "Full-viewport section with centered heading 'Will you be my Valentine?', a personal subtitle, and Yes/No buttons. Deep burgundy-to-dark gradient background.",
+        "acceptance": [
+          "Heading is large, readable, uses serif font with accent color on 'Valentine'",
+          "Subtitle is personal and italicized",
+          "Yes button is prominent with heart icon and gradient fill",
+          "No button is outlined/secondary style",
+          "Section fills exactly one viewport height"
+        ]
+      },
+      {
+        "id": "F004",
+        "name": "Dodging No Button",
+        "description": "The No button repositions to a random location on screen when the user hovers (desktop) or taps (mobile). It should be amusing, not frustrating.",
+        "acceptance": [
+          "On desktop: repositions on mouseenter/hover",
+          "On mobile: repositions on touchstart",
+          "Never repositions off-screen — always visible but unreachable",
+          "Yes button grows slightly and optionally sparkles when No is dodged",
+          "Button persists and continues dodging if user scrolls to other sections"
+        ]
+      },
+      {
+        "id": "F005",
+        "name": "Celebration State",
+        "description": "Modal or full-screen takeover triggered by clicking Yes. Shows animated heart, celebratory text, and personal message.",
+        "acceptance": [
+          "Pulsing/bouncing heart animation",
+          "Celebratory headline (personalized, not generic)",
+          "Background blurs or dims",
+          "Optional: confetti or sparkle particle effect",
+          "Includes a warm personal closing line referencing tonight"
+        ]
+      },
+      {
+        "id": "F006",
+        "name": "Floating Hearts Background",
+        "description": "Semi-transparent heart shapes floating gently across the viewport as ambient decoration.",
+        "acceptance": [
+          "Hearts are CSS-only or lightweight SVG — no heavy libraries",
+          "Varying sizes and opacities",
+          "Smooth float animation (not janky on mobile)",
+          "Fixed position so they persist across scroll"
+        ]
+      },
+      {
+        "id": "F007",
+        "name": "Personal Photo Carousel",
+        "description": "Section 2: 'Our Memories' — a horizontal carousel of personal photos with captions.",
+        "acceptance": [
+          "Auto-advances every 4-5 seconds",
+          "Manual swipe on mobile, click navigation optional on desktop",
+          "Rounded corners, subtle shadow on images",
+          "Placeholder images acceptable for initial build, replaced with real photos before deploy"
+        ]
+      },
+      {
+        "id": "F008",
+        "name": "Love Letter Section",
+        "description": "Section 3: A personal love letter with word-by-word or line-by-line reveal animation triggered on scroll.",
+        "acceptance": [
+          "Text appears progressively as user scrolls into view",
+          "Uses Intersection Observer for scroll-triggered animation",
+          "Serif or handwriting-style font for the letter body",
+          "Decorative heart elements above and below"
+        ]
+      }
+    ],
+
+    "non_goals": [
+      "No backend, database, or server-side logic",
+      "No user accounts or authentication",
+      "No sharing/social features",
+      "No analytics or tracking",
+      "No CMS or content editing UI",
+      "No background music or audio",
+      "Not a reusable template — this is a one-time personal page"
+    ],
+
+    "ux_flow": [
+      "1. She receives a link (texted or shown at dinner) and opens it on her phone",
+      "2. Page loads instantly — she sees the hero: 'Will you be my Valentine?' with a personal subtitle",
+      "3. Floating hearts drift gently in the background",
+      "4. She notices Yes and No buttons",
+      "5. She taps No (if she tries) — it jumps away, she laughs. Yes button grows. Repeat as many times as she wants.",
+      "6. She taps Yes",
+      "7. Celebration modal appears — animated heart, joyful text, personal message about tonight's dinner",
+      "8. She scrolls down (or celebration auto-dismisses) to see the memories carousel with your photos",
+      "9. She scrolls further to read the love letter, words appearing one by one",
+      "10. Page ends with decorative hearts and a warm closing"
+    ],
+
+    "content_and_tone_guidelines": {
+      "voice": "First-person, intimate, slightly playful. Write like you're talking to her, not like a greeting card.",
+      "headline": "Keep 'Will you be my Valentine?' — it is the classic, and it works.",
+      "subtitle": "Replace the generic 'I've been waiting to ask you this...' with something personal. Example: a reference to your first date, an inside joke, or a specific compliment.",
+      "celebration_text": "Should feel like genuine excitement, not performative. Reference tonight's dinner specifically.",
+      "love_letter": "Write this yourself. 4-6 sentences. Mention specific memories, things you love about her, and why she matters to you. The word-by-word animation will give each word weight — shorter is better.",
+      "things_to_avoid": [
+        "Generic greeting card language ('You complete me', 'You're the sunshine in my life')",
+        "Anything that reads like it was written by AI",
+        "Overly long text — the animations need breathing room"
+      ]
+    },
+
+    "technical_constraints": {
+      "stack": "Next.js 15 (App Router) with TypeScript and Tailwind CSS. All interactive components use 'use client' directive.",
+      "alternative_stack": "Original option was single HTML + Tailwind CDN, but Next.js chosen for native Vercel deployment, next/image optimization, and next/font self-hosting.",
+      "deployment": "Vercel — native Next.js deployment. Static export via `output: 'export'` in next.config.ts.",
+      "performance": "No heavy dependencies. Total page weight under 500KB excluding photos. CSS animations over JS animations where possible. next/image for automatic WebP conversion and lazy loading. next/font for zero layout shift.",
+      "compatibility": "Must work on Safari iOS (her phone, most likely) and Chrome. Test touch events.",
+      "fonts": "Self-hosted via next/font — Playfair Display (serif) and Inter (sans-serif). No external CDN requests.",
+      "images": "Optimized via next/image — automatic WebP conversion, responsive sizing, lazy loading. Real photos placed in public/photos/."
+    },
+
+    "open_questions": [
+      "What personal photos should go in the carousel? (Need 3-5 photos ready before deploy)",
+      "What is the personal subtitle for the hero? (Inside joke, first date reference, etc.)",
+      "What should the love letter say? (Builder should draft this — it must be authentic)",
+      "What is the celebration message referencing tonight? (e.g., 'Can't wait for dinner tonight' or 'See you at [restaurant name]')",
+      "Does she have a favorite color that should influence the palette, or is the burgundy/pink/coral scheme good?",
+      "Should the No button show escalating funny messages, or just silently dodge?"
+    ],
+
+    "assumptions": [
+      "She will view this on an iPhone (mobile-first is critical)",
+      "She has not seen the reference site (the interaction will feel fresh)",
+      "The link will be shared at or just before dinner tonight",
+      "Photos are available and can be added before deployment",
+      "The builder will write the personal copy (love letter, subtitle, celebration text) — the PRD provides structure, not final words",
+      "Vercel or Netlify account is available for deployment"
+    ]
+  }
+}
