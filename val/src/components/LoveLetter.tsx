@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 const LETTER_TEXT =
   "Every moment with you feels like the most beautiful dream I never want to wake up from. " +
   "You make ordinary days extraordinary just by being in them. " +
-  "Your laugh is my favorite sound in the entire world. " +
-  "I fall for you a little more every single day, and I didn't think that was possible. " +
-  "Thank you for being you — my favorite person, my best friend, my everything.";
+  "Reminding each day how beautiful the world truly can be." +
+  "The year go by and our bond grows deeper" +
+  "Thank you for being you — my favorite person, my everything.";
 
 export default function LoveLetter() {
   const words = LETTER_TEXT.split(" ");
@@ -26,7 +26,7 @@ export default function LoveLetter() {
           observer.disconnect();
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
 
     observer.observe(el);

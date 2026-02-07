@@ -4,13 +4,13 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { motion } from "framer-motion";
 
 const PHOTOS = [
-  { src: "/photos/1.jpeg", caption: "Our first adventure" },
-  { src: "/photos/2.jpeg", caption: "That unforgettable day" },
-  { src: "/photos/3.jpeg", caption: "Just us" },
-  { src: "/photos/4.jpeg", caption: "My favorite memory" },
+  { src: "/photos/1.jpeg", caption: "Sparkling beauty" },
+  { src: "/photos/2.jpeg", caption: "Where you belong" },
+  { src: "/photos/3.jpeg", caption: "Center of my World" },
+  { src: "/photos/4.jpeg", caption: "Our favorite spot" },
   { src: "/photos/5.jpeg", caption: "Always smiling with you" },
-  { src: "/photos/New-year.jpeg", caption: "Ringing in the New Year" },
-  { src: "/photos/yes.jpeg", caption: "The moment you said yes" },
+  { src: "/photos/New-year.jpeg", caption: "New Year, New Heights" },
+  { src: "/photos/yes.jpeg", caption: "The message is still true" },
 ];
 
 export default function PhotoCarousel() {
