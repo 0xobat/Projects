@@ -1,3 +1,1 @@
-# Large media — store these outside git (CDN, LFS, or local only)
-public/photos/*.mov
-public/photos/*.mp4
+# Videos tracked via Git LFS (see root .gitattributes)
