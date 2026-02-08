@@ -161,10 +161,9 @@ function HeartParticles({ onComplete }: { onComplete: () => void }) {
   return (
     <instancedMesh ref={meshRef} args={[geometry, undefined, HEART_COUNT]}>
       <meshStandardMaterial
-        vertexColors
         toneMapped={false}
-        emissive="#ffffff"
-        emissiveIntensity={0.4}
+        emissive="#ff4060"
+        emissiveIntensity={0.3}
       />
     </instancedMesh>
   );
