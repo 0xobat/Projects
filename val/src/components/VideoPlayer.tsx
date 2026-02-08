@@ -44,8 +44,9 @@ export default function VideoPlayer({ src, visible }: VideoPlayerProps) {
   function toggleMute() {
     const video = videoRef.current;
     if (!video) return;
-    video.muted = !video.muted;
-    setMuted(video.muted);
+    const next = !muted;
+    setMuted(next);
+    video.muted = next;
     if (video.paused) {
       video.play().catch(() => {});
     }
@@ -62,7 +63,7 @@ export default function VideoPlayer({ src, visible }: VideoPlayerProps) {
       <video
         ref={videoRef}
         src={src}
-        muted
+        muted={muted}
         autoPlay
         playsInline
         preload="auto"

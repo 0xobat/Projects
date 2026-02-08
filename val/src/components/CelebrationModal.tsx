@@ -32,16 +32,17 @@ export default function CelebrationModal() {
       </div>
 
       {/* Heart burst layer — sits above video, fades out when done */}
-      <div
-        className="absolute inset-0 z-50"
-        style={{
-          opacity: phase === "burst" ? 1 : 0,
-          transition: "opacity 1s ease-out",
-          pointerEvents: phase === "burst" ? "auto" : "none",
-        }}
-      >
-        <HeartBurst onComplete={goToVideo} />
-      </div>
+      {phase === "burst" && (
+        <div
+          className="absolute inset-0 z-50"
+          style={{
+            opacity: 1,
+            transition: "opacity 1s ease-out",
+          }}
+        >
+          <HeartBurst onComplete={goToVideo} />
+        </div>
+      )}
     </div>
   );
 }

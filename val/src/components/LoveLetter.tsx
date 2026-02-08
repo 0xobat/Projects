@@ -6,8 +6,8 @@ import { motion } from "framer-motion";
 const LETTER_TEXT =
   "Every moment with you feels like the most beautiful dream I never want to wake up from. " +
   "You make ordinary days extraordinary just by being in them. " +
-  "Reminding each day how beautiful the world truly can be." +
-  "The year go by and our bond grows deeper" +
+  "As the years go by and our bond grows deeper, " +
+  "it reminds me how beautiful the world truly can be." +
   "Thank you for being you — my favorite person, my everything.";
 
 export default function LoveLetter() {
