@@ -145,7 +145,7 @@ crypto-agent/
 | Deployment             | Docker Compose → Railway                   |
 | Wallet                 | Alchemy Smart Wallet (Account Abstraction) |
 | MEV Protection         | Flashbots Protect                          |
-| Monitoring             | Structured JSON logs + Telegram alerts     |
+| Monitoring             | Structured JSON logs + Discord alerts     |
 
 ---
 
