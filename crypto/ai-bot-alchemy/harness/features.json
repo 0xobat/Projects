@@ -1,0 +1,44 @@
+[
+  {
+    "id": "F001",
+    "category": "functional",
+    "description": "ML price prediction model",
+    "steps": ["Feature engineering", "Train model", "Generate predictions"],
+    "passes": true
+  },
+  {
+    "id": "F002",
+    "category": "functional",
+    "description": "Blockchain data fetching via Alchemy SDK",
+    "steps": ["Connect to Alchemy API", "Fetch on-chain data", "Parse and store"],
+    "passes": true
+  },
+  {
+    "id": "F003",
+    "category": "functional",
+    "description": "Risk management and position sizing",
+    "steps": ["Calculate risk per trade", "Apply position limits", "Monitor exposure"],
+    "passes": false
+  },
+  {
+    "id": "F004",
+    "category": "functional",
+    "description": "Backtesting framework",
+    "steps": ["Load historical data", "Simulate trades", "Generate performance report"],
+    "passes": false
+  },
+  {
+    "id": "F005",
+    "category": "functional",
+    "description": "Live trading execution",
+    "steps": ["Connect to exchange", "Submit orders", "Track fills"],
+    "passes": false
+  },
+  {
+    "id": "F006",
+    "category": "test",
+    "description": "Unit test coverage for core modules",
+    "steps": ["Test data fetcher", "Test model predictions", "Test risk calculations"],
+    "passes": false
+  }
+]

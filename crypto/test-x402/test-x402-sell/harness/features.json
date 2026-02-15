@@ -1,0 +1,16 @@
+[
+  {
+    "id": "F001",
+    "category": "functional",
+    "description": "X402 protocol sell-side payment server",
+    "steps": ["FastAPI server setup", "x402 middleware integration", "Accept payments"],
+    "passes": true
+  },
+  {
+    "id": "F002",
+    "category": "test",
+    "description": "Automated test suite for sell flow",
+    "steps": ["Test server endpoints", "Test payment verification", "Test error handling"],
+    "passes": false
+  }
+]

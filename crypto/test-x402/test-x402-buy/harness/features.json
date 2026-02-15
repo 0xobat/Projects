@@ -1,0 +1,16 @@
+[
+  {
+    "id": "F001",
+    "category": "functional",
+    "description": "X402 protocol buy-side payment flow",
+    "steps": ["Configure wallet", "Send x402 payment request", "Verify receipt"],
+    "passes": true
+  },
+  {
+    "id": "F002",
+    "category": "test",
+    "description": "Automated test suite for buy flow",
+    "steps": ["Mock x402 server", "Test payment lifecycle", "Assert responses"],
+    "passes": false
+  }
+]
