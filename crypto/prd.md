@@ -95,7 +95,7 @@ Python owns all decisions. TypeScript owns all chain interactions. Neither cross
 | State Recovery | TTL-based pruning on Redis Streams         | Bounded storage, sufficient replay window for crash recovery   |
 | MEV Protection | Flashbots Protect                          | Private mempool routing prevents frontrunning/sandwich attacks |
 | AI Usage       | Claude API, minimal calls                  | Sentiment analysis only; keep cost proportional to portfolio   |
-| Deployment     | Railway                                    | Single-machine, managed infra, easy scaling later              |
+| Deployment     | Railway                                    | Two services - TS and PY. Managed infra, easy scaling later              |
 | Testnet First  | Yes — full Phase 1 on Sepolia              | Validate all strategies before real capital                    |
 
 ---
