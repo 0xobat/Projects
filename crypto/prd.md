@@ -207,7 +207,7 @@ Patterns from [Anthropic's long-running agent research](https://www.anthropic.co
 - New protocol deployment requires owner approval
 - Trades >15% of portfolio require confirmation
 - New strategy tier activation requires explicit approval
-- Emergency override via Telegram: pause all, force-unwind, withdraw
+- Emergency override via Discord: pause all, force-unwind, withdraw
 
 ---
 
