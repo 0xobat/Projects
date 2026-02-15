@@ -36,7 +36,7 @@ Autonomous multi-strategy DeFi bot that generates 20–50% risk-adjusted APY thr
 **Tier 1 — Low Risk (50–60% of capital)**
 
 - Lending optimization: Aave supply rotation based on utilization rates
-- Liquid staking: ETH → stETH via Lido, deploy derivatives into further yield
+- Liquid staking: ETH → stETH via Lido OR ETH → rETH via RocketPool, deploy derivatives into further yield
 
 **Tier 2 — Medium Risk (25–35% of capital)**
 
