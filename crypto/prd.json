@@ -1,0 +1,31 @@
+{
+  "document": "Icarus Yield Bot Product Requirement Document (PRD)",
+  "project": "Icarus Yield Bot",
+  "version": "0.1.0",
+  "date": "2026-02-15",
+
+  "feature_list": {
+    "wallet_control": "Can buy and sell on ETH and EVM-compatible networks.",
+    "data_pipeline": "Has access to real-time and historical blockchain data",
+    "strategy_management": "Has knowledge of various management strategies and can choose to use",
+    "yield_farming": "optimize risk optimized yield on DeFi lending protocols - aave mostly",
+    "reporting": "generate monthly an quarterly performance reports with P/L sent to discord",
+    "logging": "keeps a log of all transactions executed by the bot",
+    "tax_prep": "can prepare transactions for tax reporting"
+  },
+
+  "prd": {
+    "overview": "AAn autonomous, multi-strategy DeFi asset management bot that holds crypto and stable coins with the goal to increase the portfolio value in CAD @20-50% APY while paying 5% of the profit/gains to the user on a quarterly basis.",
+    "target_user": "One specific person - the builder of the tool",
+    "user_goal": "Deposit Eth/USDC into the bot's wallet and receives quarterly payments based on the bot's performance.",
+
+    "success_criteria": [
+      "The bot can access realtime blockchain data",
+      "The bot has access to a smart wallet and can execute transactions",
+      "The bot can decide what to hold as the base yield currency",
+      "The bot can execute a trade strategy",
+      "The bot can send quarterly payments",
+      "The bot is packaged as a docker container"
+    ]
+  }
+}
