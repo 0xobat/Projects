@@ -95,7 +95,7 @@ Python owns all decisions. TypeScript owns all chain interactions. Neither cross
 | State Recovery | TTL-based pruning on Redis Streams         | Bounded storage, sufficient replay window for crash recovery   |
 | MEV Protection | Flashbots Protect                          | Private mempool routing prevents frontrunning/sandwich attacks |
 | AI Usage       | Claude API, minimal calls                  | Sentiment analysis only; keep cost proportional to portfolio   |
-| Deployment     | Railway                                    | Two services - TS and PY. Managed infra, easy scaling later              |
+| Deployment     | Railway                                    | Two services - TS and PY. Managed infra, easy scaling later    |
 | Testnet First  | Yes — full Phase 1 on Sepolia              | Validate all strategies before real capital                    |
 
 ---
@@ -145,7 +145,7 @@ crypto-agent/
 | Deployment             | Docker Compose → Railway                   |
 | Wallet                 | Alchemy Smart Wallet (Account Abstraction) |
 | MEV Protection         | Flashbots Protect                          |
-| Monitoring             | Structured JSON logs + Discord alerts     |
+| Monitoring             | Structured JSON logs + Discord alerts      |
 
 ---
 
@@ -237,7 +237,7 @@ Patterns from [Anthropic's long-running agent research](https://www.anthropic.co
 - [ ] Portfolio allocation engine with rebalancing
 - [ ] Full circuit breaker suite
 - [ ] Claude API integration (sentiment, minimal usage)
-- [ ] Telegram alert system
+- [ ] Discord alert system
 - [ ] Performance monitoring + Sharpe ratio tracking
 - [ ] L2 support (Arbitrum/Base) — listeners and executors
 - [ ] Mainnet deployment with small real capital ($50 CAD test)
@@ -249,7 +249,7 @@ Patterns from [Anthropic's long-running agent research](https://www.anthropic.co
 - [ ] Flash loan arbitrage
 - [ ] Solana listener and executor
 - [ ] ML gas prediction model
-- [ ] Mobile approval flows (Telegram inline keyboards)
+- [ ] Mobile approval flows (Discord inline keyboards)
 - [ ] Stress test against historical crashes (Mar 2020, May 2021, FTX)
 - [ ] Tax reporting and P&L attribution
 - [ ] Railway production deployment with monitoring
@@ -285,4 +285,4 @@ How an arbitrage opportunity flows through the system:
 | Uptime           | >99%        | >95%       |
 | Restart Recovery | <60 seconds | <5 minutes |
 
-The project is successful when the agent consistently generates returns above the S&P 500 benchmark (7–10% annualized) with controlled drawdowns, running autonomously on Railway with Telegram alerts and human-in-the-loop controls for high-stakes decisions.
+The project is successful when the agent consistently generates returns above the S&P 500 benchmark (7–10% annualized) with controlled drawdowns, running autonomously on Railway with Discord alerts and human-in-the-loop controls for high-stakes decisions.
