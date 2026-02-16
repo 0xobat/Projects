@@ -192,6 +192,56 @@ class RiskManager:
         self.circuit_breaker_triggered = False
         logger.warning("Circuit breaker reset")
 
+    def calculate_position_size(
+        self,
+        symbol: str,
+        entry_price: float,
+        confidence: float,
+        current_prices: Dict[str, float]
+    ) -> float:
+        """
+        Calculate optimal position size based on risk parameters and confidence.
+
+        Uses confidence-adjusted position sizing: higher confidence = larger position
+        (up to max limit).
+
+        Args:
+            symbol: Token symbol
+            entry_price: Expected entry price
+            confidence: Signal confidence (0.0 to 1.0)
+            current_prices: Current market prices for all positions
+
+        Returns:
+            Position size in token quantity
+
+        Example:
+            >>> risk_mgr = RiskManager(portfolio)
+            >>> size = risk_mgr.calculate_position_size("ETH", 3000.0, 0.8, {"ETH": 3000})
+        """
+        total_equity = self.portfolio.get_total_equity(current_prices)
+
+        # Base position size
+        base_pct = self.settings.strategy.base_position_size_pct
+
+        # Adjust by confidence (0.5x to 1.5x)
+        confidence_multiplier = 0.5 + confidence
+        adjusted_pct = base_pct * confidence_multiplier
+
+        # Cap at max position size
+        max_pct = self.settings.risk.max_position_size_pct
+        final_pct = min(adjusted_pct, max_pct)
+
+        # Calculate quantity
+        trade_value = total_equity * final_pct
+        quantity = trade_value / entry_price
+
+        logger.debug(
+            f"Position size calculated: {final_pct:.1%} of equity = "
+            f"{quantity:.4f} {symbol} @ ${entry_price:,.2f}"
+        )
+
+        return quantity
+
     def get_risk_status(self, current_prices: Dict[str, float]) -> Dict:
         """
         Get current risk status.
@@ -201,16 +251,60 @@ class RiskManager:
         """
         total_equity = self.portfolio.get_total_equity(current_prices)
         peak_equity = self.portfolio.peak_equity
+        starting_equity = self.portfolio.starting_equity
+
+        # Calculate daily P&L
+        today_pnl = total_equity - starting_equity
+        today_pnl_pct = today_pnl / starting_equity if starting_equity > 0 else 0
 
         return {
             'circuit_breaker_triggered': self.circuit_breaker_triggered,
             'current_equity': total_equity,
             'peak_equity': peak_equity,
+            'starting_equity': starting_equity,
             'drawdown_pct': (total_equity - peak_equity) / peak_equity if peak_equity > 0 else 0,
+            'daily_pnl': today_pnl,
+            'daily_pnl_pct': today_pnl_pct,
             'max_drawdown_limit': self.settings.risk.max_drawdown_pct,
+            'max_daily_loss_limit': self.settings.risk.max_daily_loss_pct,
             'max_position_size': self.settings.risk.max_position_size_pct,
             'max_concurrent_positions': self.settings.strategy.max_concurrent_positions,
-            'current_positions': self.portfolio.get_position_count()
+            'current_positions': self.portfolio.get_position_count(),
+            'available_buying_power': self.portfolio.cash
+        }
+
+    def check_position_risk(
+        self,
+        symbol: str,
+        current_price: float
+    ) -> Dict:
+        """
+        Check risk metrics for an open position.
+
+        Args:
+            symbol: Token symbol
+            current_price: Current market price
+
+        Returns:
+            Dict with position risk metrics
+        """
+        if not self.portfolio.has_position(symbol):
+            return {'has_position': False}
+
+        position = self.portfolio.get_position(symbol)
+        pnl = position.get_pnl(current_price)
+
+        stop_loss_pct = self.settings.risk.stop_loss_pct
+
+        return {
+            'has_position': True,
+            'entry_price': position.entry_price,
+            'current_price': current_price,
+            'quantity': position.quantity,
+            'pnl': pnl['pnl'],
+            'pnl_pct': pnl['pnl_pct'],
+            'stop_loss_threshold': -stop_loss_pct,
+            'should_close': pnl['pnl_pct'] <= -stop_loss_pct
         }
 
 

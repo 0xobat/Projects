@@ -18,21 +18,21 @@
     "category": "functional",
     "description": "Risk management and position sizing",
     "steps": ["Calculate risk per trade", "Apply position limits", "Monitor exposure"],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F004",
     "category": "functional",
     "description": "Backtesting framework",
     "steps": ["Load historical data", "Simulate trades", "Generate performance report"],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F005",
     "category": "functional",
     "description": "Live trading execution",
     "steps": ["Connect to exchange", "Submit orders", "Track fills"],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F006",
