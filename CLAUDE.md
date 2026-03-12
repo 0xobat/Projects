@@ -53,7 +53,6 @@ init(project): harness initialization
 | val | Stub | TBD |
 | Eth-Bot | Trading bot | TypeScript, pnpm |
 | crypto/ai-bot-alchemy | ML trading bot | Python, UV |
-| crypto/icarus | DeFi trading agent | TS + Python (dual-service, Redis) |
 | crypto/test-x402 | Protocol testing | TS + Python |
 | crypto/portfolio | Strategy docs | Markdown |
 | Spydar | FPV quadcopter | C, CMake, Pico SDK |
