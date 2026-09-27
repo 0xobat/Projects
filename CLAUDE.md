@@ -50,7 +50,6 @@ init(project): harness initialization
 
 | Project | Type | Stack |
 |---------|------|-------|
-| val | Stub | TBD |
 | Eth-Bot | Trading bot | TypeScript, pnpm |
 | crypto/ai-bot-alchemy | ML trading bot | Python, UV |
 | crypto/test-x402 | Protocol testing | TS + Python |
